@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface ProfileRepository extends JpaRepository<ProfileEntity ,Long> {
 
     //TODO Select * from tbl_profiles where email = ?
-    Optional<ProfileEntity> findByEmail(String email);
+    Optional<ProfileEntity> findByEmail(String email);  // TODO The main use of this line is to find a user/profile from the database using their email address.
 
 }

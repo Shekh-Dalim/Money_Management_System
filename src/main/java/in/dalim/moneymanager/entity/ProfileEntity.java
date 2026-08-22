@@ -36,8 +36,8 @@ public class ProfileEntity {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    private Boolean isActive;
-    private String activationToken;
+    private Boolean isActive;  // TODO  Indicates whether the user is authenticated or not , isActive = false → Login not allowed ❌, isActive = true → Login allowed ✅.
+    private String activationToken;  // TODO Indicates whether the user's email is verified and the account is active
 
     // TODO This method is used to set a default value for isActive when a new ProfileEntity is created.
     @PrePersist
