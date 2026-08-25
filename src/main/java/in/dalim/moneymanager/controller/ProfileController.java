@@ -1,11 +1,14 @@
 package in.dalim.moneymanager.controller;
 
+import in.dalim.moneymanager.dto.AuthDTO;
 import in.dalim.moneymanager.dto.ProfileDTO;
 import in.dalim.moneymanager.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,6 +35,27 @@ public class ProfileController {
                     .body("Activation token not found or already used");
         }
     }
+
+    // TODO This login() method is used to log a user into your Money Manager application.
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody AuthDTO authDTO) {
+        try {
+            if (!profileService.isAccountActive(authDTO.getEmail())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(
+                        "message", "Account is not active. Please activate your account first."
+                ));
+            }
+
+            Map<String, Object> response = profileService.authenticateAndGenerateToken(authDTO);
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "message", e.getMessage()
+            ));
+        }
+    }
+
 
 
 
